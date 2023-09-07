@@ -1,0 +1,38 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/productInfoService/product/names?productCode=5256"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": [
+      {
+        "productId": "111",
+        "productCode": "5256",
+        "productName": "IceCream",
+        "score": 6900.66
+      },
+      {
+        "productId": "222",
+        "productCode": "5256",
+        "productName": "Milk",
+        "score": 8804.9
+      },
+      {
+        "productId": "333",
+        "productCode": "5256",
+        "productName": "Meal",
+        "score": 9940.79
+      },
+      {
+        "productId": "444",
+        "productCode": "5256",
+        "productName": "Apple",
+        "score": 287.36
+      }
+    ]
+  }
+}

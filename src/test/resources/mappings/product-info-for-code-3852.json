@@ -1,0 +1,38 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/productInfoService/product/names?productCode=3852"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": [
+      {
+        "productId": "111",
+        "productCode": "3852",
+        "productName": "IceCream",
+        "score": 2628.65
+      },
+      {
+        "productId": "222",
+        "productCode": "3852",
+        "productName": "Milk",
+        "score": 2657.65
+      },
+      {
+        "productId": "333",
+        "productCode": "3852",
+        "productName": "Meal",
+        "score": 2431.73
+      },
+      {
+        "productId": "444",
+        "productCode": "3852",
+        "productName": "Apple",
+        "score": 1859.81
+      }
+    ]
+  }
+}
