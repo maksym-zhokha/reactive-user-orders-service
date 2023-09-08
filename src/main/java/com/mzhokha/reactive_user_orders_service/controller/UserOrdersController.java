@@ -19,7 +19,7 @@ public class UserOrdersController {
     @GetMapping(value = "/user/orders", produces = MediaType.APPLICATION_NDJSON_VALUE)
     public Flux<UserOrder> getUserOrders(@RequestParam String userId,
                                          @RequestHeader("requestId") String requestId) {
-        putRequestIdIntoMdc(requestId);
+        putRequestIdIntoMdc(requestId != null ? requestId : "");
         return this.userOrdersService.getOrdersByUserId(userId);
     }
 }

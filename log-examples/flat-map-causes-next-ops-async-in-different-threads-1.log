@@ -1,0 +1,59 @@
+15:09:18.322 [reactor-http-nio-2] INFO  c.m.r.service.UserOrdersService -- [1111] Getting UserOrders for user: user1
+15:09:18.508 [nioEventLoopGroup-3-3] ERROR i.n.r.d.DnsServerAddressStreamProviders -- [] Unable to load io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'. Use DEBUG level to see the full stack: java.lang.UnsatisfiedLinkError: failed to load the required native library
+15:09:19.387 [reactor-http-nio-4] DEBUG c.m.r.service.UserOrdersService -- [1111] Received order: Order[phoneNumber=123456789, orderNumber=Order_0, productCode=3852]
+15:09:20.046 [reactor-http-nio-4] DEBUG c.m.r.service.UserOrdersService -- [1111] Received order: Order[phoneNumber=123456789, orderNumber=Order_1, productCode=5256]
+15:09:20.745 [reactor-http-nio-4] DEBUG c.m.r.service.UserOrdersService -- [1111] Received order: Order[phoneNumber=123456789, orderNumber=Order_2, productCode=7894]
+15:09:21.455 [reactor-http-nio-4] DEBUG c.m.r.service.UserOrdersService -- [1111] Received products: [Product[productId=111, productCode=3852, productName=IceCream, score=1107.48], Product[productId=222, productCode=3852, productName=Milk, score=5753.63], Product[productId=333, productCode=3852, productName=Meal, score=2961.6], Product[productId=444, productCode=3852, productName=Apple, score=3119.96]]
+15:09:21.458 [reactor-http-nio-4] INFO  c.m.r.service.UserOrdersService -- [] Inside map(userAndOrderAndProducts -> ...
+15:09:21.463 [reactor-http-nio-4] DEBUG c.m.r.service.UserOrdersService -- [1111] Received order: Order[phoneNumber=123456789, orderNumber=Order_3, productCode=9822]
+15:09:25.060 [parallel-2] ERROR c.m.r.service.UserOrdersService -- [1111] Error happened during fetching products by code 5256
+java.util.concurrent.TimeoutException: Did not observe any item or terminal signal within 5000ms in 'flatMap' (and no fallback has been configured)
+	at reactor.core.publisher.FluxTimeout$TimeoutMainSubscriber.handleTimeout(FluxTimeout.java:295)
+	at reactor.core.publisher.FluxTimeout$TimeoutMainSubscriber.doTimeout(FluxTimeout.java:280)
+	at reactor.core.publisher.FluxTimeout$TimeoutTimeoutSubscriber.onNext(FluxTimeout.java:419)
+	at reactor.core.publisher.FluxOnErrorReturn$ReturnSubscriber.onNext(FluxOnErrorReturn.java:162)
+	at reactor.core.publisher.MonoDelay$MonoDelayRunnable.propagateDelay(MonoDelay.java:271)
+	at reactor.core.publisher.MonoDelay$MonoDelayRunnable.run(MonoDelay.java:286)
+	at reactor.core.scheduler.SchedulerTask.call(SchedulerTask.java:68)
+	at reactor.core.scheduler.SchedulerTask.call(SchedulerTask.java:28)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+15:09:25.073 [parallel-2] DEBUG c.m.r.service.UserOrdersService -- [1111] Received products: []
+15:09:25.073 [parallel-2] INFO  c.m.r.service.UserOrdersService -- [] Inside map(userAndOrderAndProducts -> ...
+15:09:25.752 [parallel-3] ERROR c.m.r.service.UserOrdersService -- [1111] Error happened during fetching products by code 7894
+java.util.concurrent.TimeoutException: Did not observe any item or terminal signal within 5000ms in 'flatMap' (and no fallback has been configured)
+	at reactor.core.publisher.FluxTimeout$TimeoutMainSubscriber.handleTimeout(FluxTimeout.java:295)
+	at reactor.core.publisher.FluxTimeout$TimeoutMainSubscriber.doTimeout(FluxTimeout.java:280)
+	at reactor.core.publisher.FluxTimeout$TimeoutTimeoutSubscriber.onNext(FluxTimeout.java:419)
+	at reactor.core.publisher.FluxOnErrorReturn$ReturnSubscriber.onNext(FluxOnErrorReturn.java:162)
+	at reactor.core.publisher.MonoDelay$MonoDelayRunnable.propagateDelay(MonoDelay.java:271)
+	at reactor.core.publisher.MonoDelay$MonoDelayRunnable.run(MonoDelay.java:286)
+	at reactor.core.scheduler.SchedulerTask.call(SchedulerTask.java:68)
+	at reactor.core.scheduler.SchedulerTask.call(SchedulerTask.java:28)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+15:09:25.756 [parallel-3] DEBUG c.m.r.service.UserOrdersService -- [1111] Received products: []
+15:09:25.756 [parallel-3] INFO  c.m.r.service.UserOrdersService -- [] Inside map(userAndOrderAndProducts -> ...
+15:09:26.470 [parallel-4] ERROR c.m.r.service.UserOrdersService -- [1111] Error happened during fetching products by code 9822
+java.util.concurrent.TimeoutException: Did not observe any item or terminal signal within 5000ms in 'flatMap' (and no fallback has been configured)
+	at reactor.core.publisher.FluxTimeout$TimeoutMainSubscriber.handleTimeout(FluxTimeout.java:295)
+	at reactor.core.publisher.FluxTimeout$TimeoutMainSubscriber.doTimeout(FluxTimeout.java:280)
+	at reactor.core.publisher.FluxTimeout$TimeoutTimeoutSubscriber.onNext(FluxTimeout.java:419)
+	at reactor.core.publisher.FluxOnErrorReturn$ReturnSubscriber.onNext(FluxOnErrorReturn.java:162)
+	at reactor.core.publisher.MonoDelay$MonoDelayRunnable.propagateDelay(MonoDelay.java:271)
+	at reactor.core.publisher.MonoDelay$MonoDelayRunnable.run(MonoDelay.java:286)
+	at reactor.core.scheduler.SchedulerTask.call(SchedulerTask.java:68)
+	at reactor.core.scheduler.SchedulerTask.call(SchedulerTask.java:28)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+15:09:26.471 [parallel-4] DEBUG c.m.r.service.UserOrdersService -- [1111] Received products: []
+15:09:26.472 [parallel-4] INFO  c.m.r.service.UserOrdersService -- [] Inside map(userAndOrderAndProducts -> ...
