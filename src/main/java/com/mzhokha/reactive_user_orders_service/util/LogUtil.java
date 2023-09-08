@@ -8,28 +8,43 @@ import java.util.function.Consumer;
 
 public class LogUtil {
 
+    public static final String REQUEST_ID = "requestId";
+
+    public static final String CONTEXT_REQUEST_ID = "contextRequestId";
+
+    public static void putRequestIdIntoMdc(String requestId) {
+        MDC.put(REQUEST_ID, requestId);
+    }
+
+    public static String getRequestIdFromMdc() {
+        return MDC.get(REQUEST_ID);
+    }
+
+    public static <T> Consumer<Signal<T>> logOnError(Consumer<Throwable> logStatement) {
+        return signal -> {
+            if (!signal.isOnError()) return;
+            Optional<String> contextualRequestIdOptional = signal.getContextView().getOrEmpty(CONTEXT_REQUEST_ID);
+
+            contextualRequestIdOptional.ifPresentOrElse(contextualRequestId -> {
+                        try (MDC.MDCCloseable cMdc = MDC.putCloseable(REQUEST_ID, contextualRequestId)) {
+                            logStatement.accept(signal.getThrowable());
+                        }
+                    },
+                    () -> logStatement.accept(signal.getThrowable()));
+        };
+    }
+
     public static <T> Consumer<Signal<T>> logOnNext(Consumer<T> logStatement) {
         return signal -> {
             if (!signal.isOnNext()) return;
-            logStatement(logStatement, signal);
+            Optional<String> contextualRequestIdOptional = signal.getContextView().getOrEmpty(CONTEXT_REQUEST_ID);
+
+            contextualRequestIdOptional.ifPresentOrElse(contextualRequestId -> {
+                        try (MDC.MDCCloseable cMdc = MDC.putCloseable(REQUEST_ID, contextualRequestId)) {
+                            logStatement.accept(signal.get());
+                        }
+                    },
+                    () -> logStatement.accept(signal.get()));
         };
-    }
-
-    public static Consumer<Signal<Throwable>> logOnError(Consumer<Throwable> errorLogStatement) {
-        return signal -> {
-            if (!signal.isOnError()) return;
-            logStatement(errorLogStatement, signal);
-        };
-    }
-
-    private static <T> void logStatement(Consumer<T> logStatement, Signal<T> signal) {
-        Optional<String> toPutInMdc = signal.getContextView().getOrEmpty("contextRequestId");
-
-        toPutInMdc.ifPresentOrElse(tpim -> {
-                    try (MDC.MDCCloseable cMdc = MDC.putCloseable("requestId", tpim)) {
-                        logStatement.accept(signal.get());
-                    }
-                },
-                () -> logStatement.accept(signal.get()));
     }
 }

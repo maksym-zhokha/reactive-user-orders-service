@@ -1,9 +1,6 @@
 package com.mzhokha.reactive_user_orders_service.external.client;
 
 import com.mzhokha.reactive_user_orders_service.external.model.Order;
-import com.mzhokha.reactive_user_orders_service.service.UserOrdersService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -12,8 +9,6 @@ import reactor.core.publisher.Flux;
 
 @Component
 public class OrderSearchServiceClient implements InitializingBean {
-
-    private static Logger log = LoggerFactory.getLogger(UserOrdersService.class);
 
     @Value("${order.search.service.base.url}")
     String orderSearchServiceBaseUrl;
@@ -36,8 +31,7 @@ public class OrderSearchServiceClient implements InitializingBean {
                                 .build()
                 )
                 .retrieve()
-                .bodyToFlux(Order.class)
-                .doOnNext(order -> log.debug("Using phoneNumber {} got response from orderSearchService, order: {}", phoneNumber, order));
+                .bodyToFlux(Order.class);
     }
 
     public void setOrderSearchServiceBaseUrl(String orderSearchServiceBaseUrl) {
