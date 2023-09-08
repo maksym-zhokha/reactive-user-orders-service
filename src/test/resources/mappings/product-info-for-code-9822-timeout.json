@@ -1,0 +1,21 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/productInfoService/product/names?productCode=9822"
+  },
+  "response": {
+    "status": 200,
+    "fixedDelayMilliseconds": 6000,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": [
+      {
+        "productId": "111",
+        "productCode": "5256",
+        "productName": "IceCream",
+        "score": 6900.66
+      }
+    ]
+  }
+}

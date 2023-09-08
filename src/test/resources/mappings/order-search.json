@@ -8,6 +8,6 @@
     "headers": {
       "Content-Type": "application/x-ndjson"
     },
-    "body": "\n{\"phoneNumber\":\"123456789\",\"orderNumber\":\"Order_1\",\"productCode\":\"3852\"}\n{\"phoneNumber\":\"123456789\",\"orderNumber\":\"Order_0\",\"productCode\":\"5256\"}"
+    "bodyFileName": "order-search-response.ndjson"
   }
 }

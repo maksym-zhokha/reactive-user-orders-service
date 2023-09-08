@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 @WireMockTest
 class TestUserOrdersService {
 
-    private UserRepository userRepositoryMock = mock(UserRepository.class);
+    private final UserRepository userRepositoryMock = mock(UserRepository.class);
 
     private OrderSearchServiceClient orderSearchServiceClient;
 
@@ -44,7 +44,7 @@ class TestUserOrdersService {
     }
 
     @Test
-    void getOrdersByUserId_whenUserIsPresentInDbAndOrdersPresent_returnThem() {
+    void getOrdersByUserId_whenUserIsPresentInDbAndOrdersPresentAndProductsPresent_returnUserOrders() {
         // given
         var userId = "user1";
 
@@ -59,4 +59,7 @@ class TestUserOrdersService {
                 .expectNextCount(2)
                 .verifyComplete();
     }
+
+    // getOrdersByUserId_whenProductInfoResponseFailed_returnUserOrderWithoutProductInfo
+    // getOrdersByUserId_whenProductInfoRequestTimedOut_returnUserOrderWithoutProductInfo
 }
