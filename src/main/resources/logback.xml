@@ -13,7 +13,7 @@
 
     <logger name="com.mzhokha.reactive_user_orders_service" level="DEBUG" />
 
-    <root level="WARN">
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>

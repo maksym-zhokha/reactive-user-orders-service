@@ -12,12 +12,11 @@ public class TestReactiveContextPropagation {
         Mono<String> r = Mono.just("Hello")
                 .flatMap(s -> Mono.deferContextual(ctx ->
                         Mono.just(s + "1 " + ctx.get(key))))
-                .flatMap(s -> Mono.deferContextual(ctx ->
-                        Mono.just(s + "2 " + ctx.get(key))))
-                .contextWrite(ctx -> ctx.put(key, "World"));
+                .contextWrite(ctx -> ctx.put(key, "World"))
+                .log();
 
         StepVerifier.create(r)
-                .expectNext("Hello World")
+                .expectNext("Hello1 World")
                 .verifyComplete();
     }
 }
