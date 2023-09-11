@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "url": "/productInfoService/product/names?productCode=9822"
+    "url": "/productInfoService/product/names?productCode=7894"
   },
   "response": {
     "status": 200,

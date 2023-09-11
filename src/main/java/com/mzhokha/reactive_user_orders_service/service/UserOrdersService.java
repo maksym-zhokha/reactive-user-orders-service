@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StopWatch;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 import java.time.Duration;
@@ -84,8 +85,8 @@ public class UserOrdersService {
                 .flatMap(userAndOrder -> this.productInfoServiceClient.getProductsByCode(userAndOrder.order.productCode())
                         .subscribeOn(Schedulers.parallel())
                         .timeout(Duration.ofSeconds(5))
-                        .onErrorReturn(Collections.emptyList())
                         .doOnEach(logOnError(throwable -> log.error("Error happened during fetching products by code {}", userAndOrder.order.productCode(), throwable)))
+                        .onErrorResume(e -> Mono.just(Collections.emptyList())) // order matters, must be after logging error
                         .doOnEach(logOnNext(products -> log.debug("Received products: {}", products)))
                         .map(products -> new UserAndOrderAndProducts(userAndOrder.user(), userAndOrder.order(), products))
                         .map(userAndOrderAndProducts -> {
