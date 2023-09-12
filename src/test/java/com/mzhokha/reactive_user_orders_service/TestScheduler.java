@@ -119,25 +119,23 @@ class TestScheduler {
     void merge_when_each_publishOn() {
         // when
         var namesFlux = Flux.fromIterable(namesList)
-                .publishOn(Schedulers.parallel())
                 .map(s -> {
                     delay(1000);
                     log.info("Name is: " + s);
                     return s;
                 })
+                .publishOn(Schedulers.parallel())
                 .map(this::upperCaseWithDelay)
-                //.doOnNext(System.out::println)
                 .log();
 
         var namesFlux1 = Flux.fromIterable(namesList1)
-                .publishOn(Schedulers.parallel())
                 .map(s -> {
                     delay(1000);
                     log.info("Name is: " + s);
                     return s;
                 })
+                .publishOn(Schedulers.parallel())
                 .map(this::upperCaseWithDelay)
-                //.doOnNext(System.out::println)
                 .log();
 
         var flux = namesFlux.mergeWith(namesFlux1);
@@ -184,10 +182,6 @@ class TestScheduler {
 
     @Test
     void parallel() {
-        // given
-        var noOfCores = Runtime.getRuntime().availableProcessors();
-        log.info("number of cores: {}", noOfCores);
-
         // when
         var flux = Flux.fromIterable(namesList)
                 // each element of a stream will be processed in separate thread
@@ -207,7 +201,7 @@ class TestScheduler {
     }
 
     @Test
-    void parallel_using_flatMap() {
+    void flatMap_each_element_to_subscribed_Mono() {
         // when
         var flux = Flux.just("alex", "ben", "chloe", "daemon")
                 .flatMap(name -> {
@@ -215,6 +209,27 @@ class TestScheduler {
                             .subscribeOn(Schedulers.parallel())
                             // For each element map is called in own thread (almost).
                             // For some elements one thread is used.
+                            .map(s -> {
+                                log.info("Name is: {}", s);
+                                return s;
+                            })
+                            .map(this::upperCaseWithDelay);
+                })
+                .log();
+
+        // then
+        StepVerifier.create(flux)
+                .expectNextCount(4)
+                .verifyComplete();
+    }
+
+    @Test
+    void flatMap_each_element_to_subscribed_Flux() {
+        // when
+        var flux = Flux.just("alex", "ben", "chloe", "daemon")
+                .flatMap(name -> {
+                    return Mono.just(name)
+                            .subscribeOn(Schedulers.parallel())
                             .map(s -> {
                                 log.info("Name is: {}", s);
                                 return s;
@@ -278,6 +293,7 @@ class TestScheduler {
                 .verifyComplete();
     }
 
+    // one call to onSubscribe(), request(), onComplete()
     @Test
     void concatWith_whenEachFlux_subscribeOn_parallel() {
         // given
@@ -302,7 +318,7 @@ class TestScheduler {
     }
 
     private String upperCaseWithDelay(String name) {
-        delay(2000);
+        delay(1000);
         return name.toUpperCase();
     }
 }
